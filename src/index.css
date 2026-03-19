@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #0f172a;
+  color: #e2e8f0;
+  min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Deal type badge colors */
+.badge-cash {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: white;
+}
+.badge-finance {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+}
+.badge-lease {
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  color: white;
+}
+
+/* Status badges */
+.status-scheduled {
+  background: #1e40af;
+  color: #93c5fd;
+}
+.status-delivered {
+  background: #166534;
+  color: #86efac;
+}
+.status-cancelled {
+  background: #991b1b;
+  color: #fca5a5;
+}
+.status-noshow {
+  background: #92400e;
+  color: #fcd34d;
+}
+
+/* Appointment card hover */
+.appointment-card {
+  transition: all 0.2s ease;
+  border-left: 4px solid transparent;
+}
+.appointment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+.appointment-card.deal-cash {
+  border-left-color: #16a34a;
+}
+.appointment-card.deal-finance {
+  border-left-color: #2563eb;
+}
+.appointment-card.deal-lease {
+  border-left-color: #7c3aed;
+}
+
+/* Pulse animation for upcoming appointments */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Modal overlay */
+.modal-overlay {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+/* Time slot grid for board view */
+.time-slot {
+  min-height: 80px;
+  border-bottom: 1px solid #334155;
+}
+
+/* Board view auto-refresh indicator */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
