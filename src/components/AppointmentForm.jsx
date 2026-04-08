@@ -18,6 +18,9 @@ const BANKS = [
   'Citizens Bank',
   'M&T Bank',
   'DCCFCU',
+  'PSECU',
+  'MECU',
+  'Citadel',
   'Other',
 ]
 
