@@ -110,3 +110,24 @@ body {
 .spin-slow {
   animation: spin-slow 3s linear infinite;
 }
+
+/* Bar chart animation */
+@keyframes bar-grow {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+.bar-animate {
+  animation: bar-grow 0.6s ease-out forwards;
+  transform-origin: bottom;
+}
+
+/* Month view cell hover */
+.month-cell:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Week view */
+.week-view {
+  min-height: 500px;
+}

@@ -133,6 +133,68 @@ app.get('/api/salespeople', (req, res) => {
   res.json(merged);
 });
 
+// ── GET report stats (aggregated) ──
+app.get('/api/reports/stats', (req, res) => {
+  const { start_date, end_date } = req.query;
+
+  if (!start_date || !end_date) {
+    return res.status(400).json({ error: 'start_date and end_date are required' });
+  }
+
+  // Overall counts by status
+  const statusCounts = db.prepare(`
+    SELECT status, COUNT(*) as count
+    FROM appointments
+    WHERE appointment_date BETWEEN ? AND ?
+    GROUP BY status
+  `).all(start_date, end_date);
+
+  const totals = { total: 0, Scheduled: 0, Delivered: 0, Cancelled: 0, 'No Show': 0 };
+  statusCounts.forEach(r => { totals[r.status] = r.count; totals.total += r.count; });
+
+  // Counts by deal type
+  const dealTypeCounts = db.prepare(`
+    SELECT deal_type, COUNT(*) as count
+    FROM appointments
+    WHERE appointment_date BETWEEN ? AND ?
+    GROUP BY deal_type
+  `).all(start_date, end_date);
+
+  const dealTypes = { Cash: 0, Finance: 0, Lease: 0 };
+  dealTypeCounts.forEach(r => { dealTypes[r.deal_type] = r.count; });
+
+  // Per-salesperson breakdown
+  const salespersonStats = db.prepare(`
+    SELECT salesperson,
+           COUNT(*) as total,
+           SUM(CASE WHEN status = 'Delivered' THEN 1 ELSE 0 END) as delivered,
+           SUM(CASE WHEN status = 'Cancelled' THEN 1 ELSE 0 END) as cancelled,
+           SUM(CASE WHEN status = 'No Show' THEN 1 ELSE 0 END) as no_show
+    FROM appointments
+    WHERE appointment_date BETWEEN ? AND ?
+    GROUP BY salesperson
+    ORDER BY total DESC
+  `).all(start_date, end_date);
+
+  // Daily counts for trend chart
+  const dailyCounts = db.prepare(`
+    SELECT appointment_date as date,
+           COUNT(*) as total,
+           SUM(CASE WHEN status = 'Delivered' THEN 1 ELSE 0 END) as delivered
+    FROM appointments
+    WHERE appointment_date BETWEEN ? AND ?
+    GROUP BY appointment_date
+    ORDER BY appointment_date ASC
+  `).all(start_date, end_date);
+
+  res.json({
+    totals,
+    dealTypes,
+    salespersonStats,
+    dailyCounts,
+  });
+});
+
 // Catch-all for production SPA
 if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
