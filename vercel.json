@@ -1,0 +1,11 @@
+{
+  "buildCommand": "vite build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/api/appointments/:id", "destination": "/api/appointments/[id]" },
+    { "source": "/api/appointments", "destination": "/api/appointments" },
+    { "source": "/api/salespeople", "destination": "/api/salespeople" },
+    { "source": "/api/reports/stats", "destination": "/api/reports/stats" }
+  ]
+}
