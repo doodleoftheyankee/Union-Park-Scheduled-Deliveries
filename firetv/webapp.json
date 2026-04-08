@@ -1,0 +1,18 @@
+{
+  "ver": "1.0",
+  "title": "Union Park Delivery Board",
+  "description": "Union Park Buick GMC Scheduled Delivery Appointment Board",
+  "url": "https://union-park-scheduled-deliveries.vercel.app",
+  "transparent": false,
+  "fullscreen": true,
+  "orientation": "landscape",
+  "backgroundColor": "#0f172a",
+  "features": {
+    "javascript": true,
+    "cors": true
+  },
+  "display": {
+    "overscan": false,
+    "resolution": "1080p"
+  }
+}

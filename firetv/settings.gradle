@@ -1,0 +1,2 @@
+rootProject.name = 'UnionParkDeliveryBoard'
+include ':app'
